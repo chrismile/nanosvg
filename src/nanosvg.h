@@ -1347,54 +1347,10 @@ static unsigned int nsvg__parseColor(const char* str)
 
 static float nsvg__parseOpacity(const char* str)
 {
-<<<<<<< HEAD
-	NSVGattrib* attr;
-
-	if (p != NULL) {
-		// Convert units to pixels.
-		if (units[0] == '\0') {
-			return val;
-		} else if (units[0] == 'p' && units[1] == 'x') {
-			return val;
-		} else if (units[0] == 'p' && units[1] == 't') {
-			return val / 72.0f * p->dpi;
-		} else if (units[0] == 'p' && units[1] == 'c') {
-			return val / 6.0f * p->dpi;
-		} else if (units[0] == 'm' && units[1] == 'm') {
-			return val / 25.4f * p->dpi;
-		} else if (units[0] == 'c' && units[1] == 'm') {
-			return val / 2.54f * p->dpi;
-		} else if (units[0] == 'i' && units[1] == 'n') {
-			return val * p->dpi;
-		} else if (units[0] == '%') {
-			return val/100.0f;
-		} else if (units[0] == 'e' && units[1] == 'm') {
-			if (p != NULL) {
-				attr = nsvg__getAttr(p);
-				return val * attr->fontSize;
-			}
-		} else if (units[0] == 'e' && units[1] == 'x') {
-			if (p != NULL) {
-				attr = nsvg__getAttr(p);
-				return val * attr->fontSize * 0.52f; // x-height of Helvetica.
-			}
-		}
-	} else {
-		// Convert units to pixels.
-		if (units[0] == '\0') {
-			return val;
-		} else if (units[0] == 'p' && units[1] == 'x') {
-			return val;
-		} else if (units[0] == '%') {
-			return (val/100.0f);
-		}
-	}
-=======
 	float val = 0;
 	sscanf(str, "%f", &val);
 	if (val < 0.0f) val = 0.0f;
 	if (val > 1.0f) val = 1.0f;
->>>>>>> refs/remotes/memononen/master
 	return val;
 }
 
@@ -2745,30 +2701,19 @@ static void nsvg__scaleToViewbox(NSVGparser* p, const char* units)
 
 	// Guess image size if not set completely.
 	nsvg__imageBounds(p, bounds);
-<<<<<<< HEAD
 	tx = -p->viewMinx;
 	ty = -p->viewMiny;
 	if (p->viewWidth == 0) {
 		tx = -bounds[0];
-		if (p->image->width > 0)
-=======
-
-	if (p->viewWidth == 0) {
 		if (p->image->width > 0) {
->>>>>>> refs/remotes/memononen/master
 			p->viewWidth = p->image->width;
 		} else {
-			p->viewMinx = bounds[0];
-			p->viewWidth = bounds[2] - bounds[0];
+			p->viewWidth = bounds[2] - bounds[0]; // patch https://github.com/memononen/nanosvg/issues/29
 		}
 	}
 	if (p->viewHeight == 0) {
-<<<<<<< HEAD
 		ty = -bounds[1];
 		if (p->image->height > 0)
-=======
-		if (p->image->height > 0) {
->>>>>>> refs/remotes/memononen/master
 			p->viewHeight = p->image->height;
 		} else {
 			p->viewMiny = bounds[1];
